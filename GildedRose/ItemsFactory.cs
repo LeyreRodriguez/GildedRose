@@ -1,4 +1,6 @@
-﻿namespace GildedRose
+﻿using GildedRose.Model;
+
+namespace GildedRose
 {
     public class ItemsFactory
     {
@@ -7,32 +9,27 @@
         {
             switch (item.Name)
             {
-                case "Sulfuras":
+                case "Sulfuras, Hand of Ragnaros":
                       return new Sulfuras();
-                      
+
+                case "Conjured":
+                    return new Conjured();
+
+                case "Backstage passes to a TAFKAL80ETC concert":
+                    return new BackstagePasses();
+
+                case "Aged Brie":
+                    return new AgeBrie();
+
 
 
                 default:
-                    return new AgeBrie();
+                    return new RegularItem();
                      
             }
             
         }
     }
 
-    internal class AgeBrie : DegradableItem
-    {
-        public void Update(Item item)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    internal class Sulfuras : DegradableItem
-    {
-        public void Update(Item item)
-        {
-            throw new NotImplementedException();
-        }
-    }
+   
 }
