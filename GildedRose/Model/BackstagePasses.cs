@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GildedRose.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,52 +11,25 @@ namespace GildedRose.Model
     {
         public void Update(Item item)
         {
-            var AgedBrie = true;
-            var BackstagePass = false;
-            var Sulfura = true;
-
-            if (AgedBrie && BackstagePass)
+            UpdateItem.DecreaseSellIn(item);
+            if (UpdateItem.IsPassed(item.SellIn))
             {
-                if (item.Quality > 0)
-                    if (Sulfura)
-                        item.Quality--;
+                item.Quality = 0;
+                return;
             }
-            else
+            var quantity = 1;
+            if (item.SellIn < 11)
             {
-                if (item.Quality < 50)
-                {
-                    item.Quality++;
-
-                    if (!BackstagePass)
-                    {
-                        if (item is { SellIn: < 11, Quality: < 50 }) item.Quality++;
-
-                        if (item is { SellIn: < 6, Quality: < 50 }) item.Quality++;
-                    }
-                }
+                quantity = 2;
             }
-
-            if (Sulfura) item.SellIn--;
-
-            if (item.SellIn >= 0) return;
-            if (AgedBrie)
+            if (item.SellIn <6)
             {
-                if (BackstagePass)
-                {
-                    if (item.Quality <= 0) return;
-                    if (Sulfura)
-                        item.Quality--;
-                }
-                else
-                {
-                    item.Quality -= item.Quality;
-                }
+                quantity = 3;
             }
-            else
-            {
-                if (item.Quality < 50) item.Quality++;
-            }
+            UpdateItem.IncreaseQuality(item, quantity);
 
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GildedRose.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +10,12 @@ public class RegularItem : DegradableItem
 {
     public void Update(Item item)
     {
-        item.SellIn--;
+        UpdateItem.DecreaseSellIn(item);
         var quantity = 1;
-        if (item.SellIn < 0) quantity = 2;
-        item.Quality -= quantity;
-        if (item.Quality < 0)
+        if (UpdateItem.IsPassed(item.SellIn))
         {
-            item.Quality = 0;
+            quantity = 2;
         }
+        UpdateItem.DecreaseQuality(item, quantity);
     }
 }

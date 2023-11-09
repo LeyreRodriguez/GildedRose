@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GildedRose.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +11,13 @@ namespace GildedRose.Model
     {
         public void Update(Item item)
         {
-            item.SellIn--;
+            UpdateItem.DecreaseSellIn(item);
             var quantity = 2;
-            if (item.SellIn < 0)
+            if (UpdateItem.IsPassed(item.SellIn))
             {
                 quantity = 4;
             }
-
-            item.Quality -= quantity;
-            if (item.Quality < 0)
-            {
-                item.Quality = 0;
-            }
+            UpdateItem.DecreaseQuality(item, quantity);
 
         }
     }
